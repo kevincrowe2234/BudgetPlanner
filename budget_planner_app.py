@@ -50,7 +50,7 @@ if 'income_data' not in st.session_state:
         'Recurring': [],
         'Frequency': [],
         'Type': []
-    })
+    }) 
 
 if 'last_update' not in st.session_state:
     st.session_state.last_update = datetime.datetime.now()
@@ -70,6 +70,7 @@ if 'bank_balance' not in st.session_state:
 
 if 'projection_months' not in st.session_state:
     st.session_state.projection_months = 18
+
 
 
 # Functions for data manipulation
@@ -728,9 +729,6 @@ with tab2:
                     st.session_state.income_data['Amount'] = st.session_state.income_data['Amount'].astype(float)
 
                 st.success(f"Added {income_desc} to income!")
-
-                # Force a rerun of the app to update all components
-                st.rerun()
             else:
                 st.error("Please provide a description and amount greater than zero.")
 
@@ -768,7 +766,7 @@ with tab2:
         # Update the session state with edited data
         if not edited_income.equals(st.session_state.income_data):
             st.session_state.income_data = edited_income
-            st.rerun()  # Force refresh when income data is edited
+
     else:
         st.info("No income entries yet. Add some income to get started!")
 
@@ -827,9 +825,6 @@ with tab3:
                     st.session_state.expense_data['Amount'] = st.session_state.expense_data['Amount'].astype(float)
 
                 st.success(f"Added {expense_desc} to expenses!")
-
-                # Force a rerun of the app to update all components
-                st.rerun()
             else:
                 st.error("Please provide a description and amount greater than zero.")
 
@@ -867,40 +862,6 @@ with tab3:
         # Update the session state with edited data
         if not edited_expense.equals(st.session_state.expense_data):
             st.session_state.expense_data = edited_expense
-            st.rerun()  # Force refresh when expense data is edited
+
     else:
         st.info("No expense entries yet. Add some expenses to get started!")
-
-# Footer
-st.markdown("""
----
-### How to Use This Budget Planner
-
-1. **Initial Setup**: Set your initial bank balance and projection period in the sidebar.
-2. **Add Income & Expenses**: Use the Income and Expenses tabs to add your financial data.
-3. **Recurring Transactions**: For regular income or expenses, check the "Recurring" option and select the frequency.
-4. **View Projections**: The Dashboard tab shows your projected balance over time.
-5. **Save & Load**: Use the sidebar options to save your budget or load a previously saved one.
-6. **Import Transactions**: Import past transactions from a CSV file to create a future budget based on your spending history.
-7. **Debug Information**: If you encounter issues, check the Debug Information in the Dashboard tab.
-8. **Refresh Projections**: Use the Refresh Projections button if the charts don't update automatically.
-
-### CSV File Formats
-
-**Saving/Loading Budget Data:**
-- The app saves/loads data as a CSV file with headers.
-- Headers include: Description, Amount, Date, Recurring, Frequency, Type
-- Date format: YYYY-MM-DD
-- Recurring: True/False
-- Frequency: None, Daily, Weekly, Biweekly, Monthly, Quarterly, Annually
-- Type: Income, Expense, Metadata
-
-**Importing Transaction History:**
-- Your CSV should have headers.
-- Required columns: Date, Amount, Description (customize names in the import section)
-- Date column should contain dates in a standard format (YYYY-MM-DD is preferred)
-- Amount column: positive numbers for income, negative numbers for expenses
-- Additional columns are ignored
-
-This planner helps you ensure your bank balance remains positive throughout your projection period!
-""")
